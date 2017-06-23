@@ -1,1 +1,1 @@
-from .qiniu_upload_token import ResourceQiNiuUploadToken
+from .user_qiniu_upload_token_list import ResourceUserQiNiuUploadTokenList
