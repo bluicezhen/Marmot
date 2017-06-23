@@ -1,0 +1,1 @@
+from .qiniu_upload_token import ResourceQiNiuUploadToken
