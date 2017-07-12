@@ -6,7 +6,7 @@ from server.exc import ExceptionResponse
 def auth_params_body(params_except=None, params_option=None):
     @wrapt.decorator
     def decorated_function(wrapped, instance, args, kwargs):
-        data = request.json
+        data = request.get_json()
         g.params = {}
         if params_except is not None:
             if data is None:

@@ -16,7 +16,13 @@ class TestApi(unittest.TestCase):
             self.request = self.app.get(
                 url,
                 headers=headers,
-                # input_stream=StringIO(json.dumps(data)))
+                input_stream=StringIO(json.dumps(data))
+            )
+        elif method == "POST":
+            self.request = self.app.post(
+                url,
+                headers=headers,
+                input_stream=StringIO(json.dumps(data))
             )
         print(self.request._status)
         print(self.request.headers)

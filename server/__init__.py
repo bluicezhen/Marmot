@@ -12,6 +12,6 @@ def create_app():
     app.debug = debug
     api = Api(app=app)
 
-    api.add_resource(resource.ResourceUserQiNiuUploadTokenList, "/user/<int:user_uid>/qiniu_upload_token")
+    api.add_resource(resource.ResourceEventL,   "/event")
 
     return app
