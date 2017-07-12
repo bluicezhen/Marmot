@@ -15,7 +15,7 @@ def auth_params_body(params_except=None, params_option=None):
                 for key in params_except:
                     g.params[key] = data[key]
             except KeyError:
-                raise ExceptionResponse(401, "Illegal Parameter")
+                raise ExceptionResponse(401, f"Necessary Parameters: {key}")
             try:
                 for key in params_option:
                     g.params[key] = data[key]
