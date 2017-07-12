@@ -3,7 +3,7 @@ from flask import g
 from server.db import DBSession
 
 
-def auth_params_body():
+def db_session():
     @wrapt.decorator
     def decorated_function(wrapped, instance, args, kwargs):
         g.db_session = DBSession()
