@@ -4,8 +4,6 @@ import json
 
 
 def resource():
-    """RESTFul Json标准返回值装饰器，拦截标准异常转化为 HTTP 错误码"""
-
     @wrapt.decorator
     def decorated_function(wrapped, instance, args, kwargs):
         try:
