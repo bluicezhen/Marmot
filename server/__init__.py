@@ -13,5 +13,6 @@ def create_app():
     api = Api(app=app)
 
     api.add_resource(resource.ResourceEventL,   "/event")
+    api.add_resource(resource.ResourceUserL,    "/user")
 
     return app

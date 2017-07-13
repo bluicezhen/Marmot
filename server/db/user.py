@@ -10,10 +10,10 @@ class TableUser(declarative_base()):
     __tablename__ = "user"
 
     uuid = Column(CHAR(36), primary_key=True)
-    username = Column(String(32), unique=True)
-    password = Column(CHAR(64))
-    nickname = Column(String(256))
-    time_create = Column(DateTime)
+    username = Column(String(32), unique=True, nullable=False)
+    password = Column(CHAR(64), nullable=False)
+    nickname = Column(String(256), nullable=False)
+    time_create = Column(DateTime, nullable=False)
 
     def __init__(self, username: str, password: str, nickname: str):
         self.uuid = str(uuid5(NAMESPACE_URL, f"user:{username}"))
