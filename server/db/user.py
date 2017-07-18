@@ -20,7 +20,7 @@ class TableUser(declarative_base()):
         self.username = username
         self.nickname = nickname
         self.time_create = datetime.now()
-        self.password = sha256(f"{password}:{self.time_create.timestamp()}").hexdigest()
+        self.password = sha256(f"{password}:{self.time_create.timestamp()}".encode("utf-8")).hexdigest()
 
     def to_dict(self) -> Dict[str, Union[str, int]]:
         return {

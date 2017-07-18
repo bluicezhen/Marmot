@@ -10,10 +10,10 @@ class TableEvent(declarative_base()):
     __tablename__ = "event"
 
     uuid = Column(CHAR(36), primary_key=True)
-    title = Column(String(512))
-    desc = Column(Text)
-    time_begin = Column(DateTime)
-    time_end = Column(DateTime)
+    title = Column(String(512), nullable=False)
+    desc = Column(Text, default="")
+    time_begin = Column(DateTime, nullable=False)
+    time_end = Column(DateTime, nullable=False)
 
     def __init__(self, title: str, desc: str, time_begin: datetime, time_end: datetime):
         self.uuid = str(uuid5(NAMESPACE_URL, f"{self.__tablename__}:{time()}:{title}"))
