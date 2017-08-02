@@ -10,8 +10,8 @@ from typing import Dict, Union
 
 class ResourceUserL(Resource):
     @cross_origin()
-    @auth_params_body(params_except=["username", "password", "nickname"])
     @resource()
+    @auth_params_body(params_except=["username", "password", "nickname"])
     def post(self) -> Dict[str, Union[str, int]]:
         try:
             with DBSession() as db_session:
