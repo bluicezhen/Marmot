@@ -1,5 +1,4 @@
-from server.db import TableUser
-from server.exc import ExceptionResponse
+from server.db import ExceptionDB, TableUser
 from sqlalchemy.orm.exc import NoResultFound
 from ._model import Model
 
@@ -18,4 +17,4 @@ class ModelUser(Model):
                 .filter(TableUser.username == username, TableUser.password == password) \
                 .one()
         except NoResultFound:
-            raise ExceptionResponse(404, "Not Found")
+            raise ExceptionDB("NOT_FOUND")
