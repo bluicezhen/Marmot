@@ -1,7 +1,7 @@
 from flask import g
 from flask_cors import cross_origin
 from flask_restful import Resource
-from server.db import DBException, DBSession
+from server.db import ExceptionDB, DBSession
 from server.exc import ExceptionResponse
 from server.model import ModelUser
 from server.public.dec import auth_params_body, resource
@@ -18,7 +18,7 @@ class ResourceUserL(Resource):
                 return ModelUser(db_session) \
                     .create_one(g.params["username"], g.params["password"], g.params["nickname"]) \
                     .to_dict()
-        except DBException as e:
+        except ExceptionDB as e:
             if e.type == "UNIQUE" and e.field == "username":
                 raise ExceptionResponse(400, "The username has been registered.")
             else:
