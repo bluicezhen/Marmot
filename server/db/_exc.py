@@ -1,6 +1,6 @@
-class DBException(Exception):
-    def __init__(self, type: str, field: str=None):
-        self.type = type
+class ExceptionDB(Exception):
+    def __init__(self, e_type: str, field: str=None):
+        self.type = e_type
         self.field = field
 
     def __str__(self):

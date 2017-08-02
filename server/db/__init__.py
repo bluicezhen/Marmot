@@ -6,7 +6,7 @@ from sqlalchemy.orm import sessionmaker
 from .event import TableEvent
 from .user import TableUser
 from .user_token import TableUserToken
-from ._exc import DBException
+from ._exc import ExceptionDB
 
 engine = create_engine(f"sqlite:///{os.getcwd()}/marmot.db", echo=True)
 Session = sessionmaker(bind=engine)
@@ -42,4 +42,4 @@ class DBSession(ContextDecorator):
         v = str(exc_val)
         if "UNIQUE" in v:
             field = v.split("UNIQUE constraint failed: ")[1].split(" [SQL:")[0].split(".")[1]
-            raise DBException("UNIQUE", field=field)
+            raise ExceptionDB("UNIQUE", field=field)
