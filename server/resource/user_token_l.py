@@ -17,7 +17,7 @@ class ResourceUserToken(Resource):
         try:
             with DBSession() as db_session:
                 user = ModelUser(db_session).find_one_by_username_password(username, password)
-                return ModelUserToken(db_session).create_one(user.uuid)
+                return ModelUserToken(db_session).create_one(user.uuid).to_dict()
         except ExceptionDB as e:
             if e.type == "NOT_FOUND":
                 raise ExceptionResponse(400, "Username/Password Error!")

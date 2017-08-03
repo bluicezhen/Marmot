@@ -1,4 +1,5 @@
 from server.db import ExceptionDB, TableUser
+from server.public.func import password_hash_salt
 from sqlalchemy.orm.exc import NoResultFound
 from ._model import Model
 
@@ -13,8 +14,12 @@ class ModelUser(Model):
 
     def find_one_by_username_password(self, username: str, password: str) -> TableUser:
         try:
-            return self.session.query(TableUser) \
-                .filter(TableUser.username == username, TableUser.password == password) \
-                .one()
+            user = self.session.query(TableUser) \
+                .filter(TableUser.username == username) \
+                .one()  # type: TableUser
+            password_hash = password_hash_salt(password, user.time_create)
+            if password_hash != user.password:
+                raise ExceptionDB("NOT_FOUND")
+            return user
         except NoResultFound:
             raise ExceptionDB("NOT_FOUND")

@@ -1,5 +1,4 @@
 from datetime import datetime
-from hashlib import sha256
 from typing import Dict, Union
 from uuid import uuid5, NAMESPACE_URL
 from server.public.func import password_hash_salt
