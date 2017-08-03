@@ -12,7 +12,8 @@ def create_app():
     app.debug = debug
     api = Api(app=app)
 
-    api.add_resource(resource.ResourceEventL,   "/event")
-    api.add_resource(resource.ResourceUserL,    "/user")
+    api.add_resource(resource.ResourceEventL, "/event")
+    api.add_resource(resource.ResourceUserL, "/user")
+    api.add_resource(resource.ResourceUserToken, "/user_token")
 
     return app

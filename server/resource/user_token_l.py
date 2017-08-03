@@ -11,12 +11,13 @@ class ResourceUserToken(Resource):
     @cross_origin()
     @resource()
     @auth_params_body(params_except=["username", "password"])
-    def post(self):
+    def post(self) -> dict:
         username = g.params["username"]
         password = g.params["password"]
         try:
             with DBSession() as db_session:
-                ModelUser(db_session).find_one_by_username_password(username, password)
+                user = ModelUser(db_session).find_one_by_username_password(username, password)
+                return ModelUserToken(db_session).create_one(user.uuid)
         except ExceptionDB as e:
             if e.type == "NOT_FOUND":
                 raise ExceptionResponse(400, "Username/Password Error!")
