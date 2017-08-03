@@ -13,9 +13,11 @@ class TableUserToken(declarative_base()):
     user_uuid = Column(CHAR(36), ForeignKey(TableUser.uuid, onupdate="CASCADE", ondelete="CASCADE"), nullable=False)
     token = Column(CHAR(64), nullable=False)
     time_create = Column(DateTime, nullable=False, default=datetime.now)
+    time_update = Column(DateTime, nullable=False)
 
     def __init__(self, user_uuid: str):
         self.time_create = datetime.now()
+        self.time_update = self.time_create
         self.uuid = str(uuid5(NAMESPACE_URL, f"token:{user_uuid}:{self.time_create.timestamp()}"))
         self.user_uuid = user_uuid
         self.token = sha256(self.uuid.encode("utf-8")).hexdigest()
