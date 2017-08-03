@@ -4,12 +4,13 @@ from flask_cors import cross_origin
 from flask_restful import Resource
 from server.exc import ExceptionResponse
 from server.model import ModelEvent
-from server.public.dec import auth_params_body, resource
+from server.public.dec import auth_params_body, auth_permission, resource
 
 
 class ResourceEventL(Resource):
     @cross_origin()
     @resource()
+    @auth_permission(["user"])
     @auth_params_body(params_except=["title", "desc", "time_begin", "time_end"])
     def post(self):
         try:
