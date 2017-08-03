@@ -23,3 +23,9 @@ class ModelUser(Model):
             return user
         except NoResultFound:
             raise ExceptionDB("NOT_FOUND")
+
+    def find_one_by_uuid(self, uuid: str) -> TableUser:
+        try:
+            return self.session.query(TableUser).filter(TableUser.uuid == uuid).one()
+        except NoResultFound:
+            raise ExceptionDB("NOT_FOUND")
