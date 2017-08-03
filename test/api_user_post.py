@@ -6,6 +6,6 @@ class Test(TestApi):
         self.request("POST", "/user", data={
             "username": "bluice",
             "password": "123456",
-            "nickname": "无常"
+            "nickname": "z37"
         }
                      )

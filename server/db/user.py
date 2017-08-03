@@ -2,6 +2,7 @@ from datetime import datetime
 from hashlib import sha256
 from typing import Dict, Union
 from uuid import uuid5, NAMESPACE_URL
+from server.public.func import password_hash_salt
 from sqlalchemy import Column, CHAR, DateTime, String
 from sqlalchemy.ext.declarative import declarative_base
 
@@ -20,7 +21,7 @@ class TableUser(declarative_base()):
         self.username = username
         self.nickname = nickname
         self.time_create = datetime.now()
-        self.password = sha256(f"{password}:{self.time_create.timestamp()}".encode("utf-8")).hexdigest()
+        self.password = password_hash_salt(password, self.time_create)
 
     def to_dict(self) -> Dict[str, Union[str, int]]:
         return {
