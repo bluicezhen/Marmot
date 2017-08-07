@@ -1,8 +1,9 @@
 import wrapt
+from conf import debug
 from flask import g, request
 from server.exc import ExceptionResponse
 from server.model import ModelUser, ModelUserToken
-from server.db import DBSession
+from server.db import DBSession, ExceptionDB
 
 MODEL_ADMIN = 0
 MODEL_USER = 1
@@ -30,9 +31,16 @@ def auth_permission(permission_model_l):
 
 
 def _auth_user(user_uuid: str, token: str):
-    with DBSession() as db_session:
-        if ModelUserToken(db_session).update_one_by_user_uuid_token_latest(user_uuid, token) <= 0:
-            db_session.rollback()
-            raise ExceptionResponse(403, "NOT Logged In")
-        g.user = ModelUser(db_session).find_one_by_uuid(user_uuid)
-        db_session.commit()
+    try:
+        with DBSession() as db_session:
+            if debug:
+                g.user = ModelUser(db_session).find_one_by_uuid(user_uuid)
+            else:
+                if ModelUserToken(db_session).update_one_by_user_uuid_token_latest(user_uuid, token) <= 0:
+                    db_session.rollback()
+                    raise ExceptionResponse(403, "NOT Logged In")
+                g.user = ModelUser(db_session).find_one_by_uuid(user_uuid)
+                db_session.commit()
+    except ExceptionDB as e:
+        if e.type == "NOT_FOUND":
+            raise ExceptionResponse(403, "Illegal User")
