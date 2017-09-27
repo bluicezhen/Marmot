@@ -9,9 +9,13 @@ class TestApi(unittest.TestCase):
     def setUp(self):
         self.app = create_app().test_client()
 
-    def request(self, method: str, url: str, data=None):
+    def request(self, method: str, url: str, data: dict=None, user_uuid: str="37"):
         print(f"{method} {url}")
-        headers = {"Content-Type": "application/json"}
+        headers = {
+            "Content-Type": "application/json",
+            "User-UUID": user_uuid,
+            "Token": "Marmot"
+        }
         if method == "GET":
             self.request = self.app.get(
                 url,

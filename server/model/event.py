@@ -6,8 +6,8 @@ from ._model import Model
 
 
 class ModelEvent(Model):
-    def create_one(self, title: str, desc: str, time_begin: datetime, time_end: datetime) -> TableEvent:
-        event = TableEvent(title, desc, time_begin, time_end)
+    def create_one(self, user_uuid: str, title: str, desc: str, time_begin: datetime, time_end: datetime) -> TableEvent:
+        event = TableEvent(user_uuid, title, desc, time_begin, time_end)
         self.session.add(event)
         self.session.commit()
         self.session.refresh(event)

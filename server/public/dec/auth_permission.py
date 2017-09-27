@@ -34,12 +34,12 @@ def _auth_user(user_uuid: str, token: str):
     try:
         with DBSession() as db_session:
             if debug:
-                g.user = ModelUser(db_session).find_one_by_uuid(user_uuid)
+                g.user = ModelUser(db_session).find_one_by_uuid(user_uuid).to_dict()
             else:
                 if ModelUserToken(db_session).update_one_by_user_uuid_token_latest(user_uuid, token) <= 0:
                     db_session.rollback()
                     raise ExceptionResponse(403, "NOT Logged In")
-                g.user = ModelUser(db_session).find_one_by_uuid(user_uuid)
+                g.user = ModelUser(db_session).find_one_by_uuid(user_uuid).to_dict()
                 db_session.commit()
     except ExceptionDB as e:
         if e.type == "NOT_FOUND":
